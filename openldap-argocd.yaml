@@ -1,0 +1,155 @@
+metadata:
+  name: openldap
+  namespace: argocd
+spec:
+  destination:
+    namespace: example
+    server: https://kubernetes.default.svc
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - ServerSideApply=true
+  source:
+    path: openldap
+    repoURL: https://github.com/joshuacox/argocd-tests.git
+    targetRevision: HEAD
+    helm:
+      values: |
+        global:
+          imageRegistry: ""
+          adminUser: "admin"
+          adminPassword: secret123 
+          configUserEnabled: true
+          configUser: "configadmin"
+          configPassword: secretconfig123 
+          ldapPort: 389
+          sslLdapPort: 636
+        clusterDomain: cluster.local
+        replicaCount: 1
+        service:
+          annotations:
+            metallb.universe.tf/address-pool: ldap
+          type: ClusterIP
+          sessionAffinity: None
+        env:
+         BITNAMI_DEBUG: "true"
+         LDAP_LOGLEVEL: "256"
+         LDAP_TLS_ENFORCE: "false"
+         LDAPTLS_REQCERT: "never"
+         LDAP_ENABLE_TLS: "yes"
+         LDAP_CONFIG_ADMIN_ENABLED: "yes"
+         LDAP_CONFIG_ADMIN_USERNAME: "config"
+         LDAP_SKIP_DEFAULT_TREE: "no"
+         LDAP_ORGANISATION: "example org"
+         LDAP_READONLY_USER: "true"
+         LDAP_READONLY_USER_USERNAME: "readonly"
+         LDAP_READONLY_USER_PASSWORD: "secretreadonly"
+         LDAP_ROOT: "dc=ldap,dc=example,dc=com"
+         LDAP_ADMIN_DN: "cn=admin,dc=ldap,dc=example,dc=com"
+         LDAP_EXTRA_SCHEMAS: "cosine,dyngroup,inetorgperson,nis"
+        pdb:
+          enabled: false
+          minAvailable: 1
+          maxUnavailable: ""
+        customSchemaFiles:
+          00-modules.ldif: |-
+            dn: cn=module,cn=config
+            cn: module 
+            objectClass: olcModuleList
+            olcModulePath: /opt/bitnami/openldap/lib/openldap
+            olcModuleLoad: dynlist
+            olcModuleLoad: argon2
+          01-dynlist.ldif: |-
+            dn: olcOverlay=dynlist,olcDatabase={2}mdb,cn=config
+            objectClass: olcOverlayConfig
+            objectClass: olcDynListConfig
+            olcOverlay: dynlist
+            olcDynListAttrSet: groupOfURLs memberURL member+memberOf@groupOfNames
+          02-ldappublickey.ldif: |-
+            dn: cn=ldapPublicKey,cn=schema,cn=config
+            objectClass: olcSchemaConfig
+            cn: openssh-lpk-openldap
+            olcAttributeTypes: ( 1.3.6.1.4.1.24552.500.1.1.1.13 NAME 'sshPublicKey' DES
+             C 'MANDATORY: OpenSSH Public key' EQUALITY octetStringMatch SYNTAX 1.3.6.1.4.
+             1.1466.115.121.1.40 )
+            olcObjectClasses: ( 1.3.6.1.4.1.24552.500.1.1.2.0 NAME 'ldapPublicKey' DESC
+              'MANDATORY: OpenSSH LPK objectclass' SUP top AUXILIARY MUST ( sshPublicKey $
+              uid ) )
+        customLdifFiles:
+          00-root.ldif: |-
+            # Root creation
+            dn: dc=ldap,dc=example,dc=com
+            objectClass: dcObject
+            objectClass: organization
+            o: Example, Inc
+          01-default-group.ldif: |-
+            dn: cn=myGroup,dc=ldap,dc=example,dc=com
+            cn: myGroup
+            gidnumber: 500
+            objectclass: posixGroup
+            objectclass: top
+          03-default-users.ldif: |-
+            dn: ou=users,dc=ldap,dc=example,dc=com
+            objectClass: organizationalUnit
+            ou: users
+          04-default-readers.ldif: |-
+            dn: cn=readers,ou=users,dc=ldap,dc=example,dc=com
+            cn: readers
+            objectClass: groupOfNames
+            member: cn=Jean Dupond,dc=ldap,dc=example,dc=com
+        persistence:
+          enabled: true
+          accessModes:
+            - ReadWriteOnce
+          size: 8Gi
+          storageClass: "openebs-lvmpv"
+        serviceAccount:
+          create: true
+          name: ""
+        volumePermissions:
+          enabled: false
+        ltb-passwd:
+          enabled : true
+          image:
+            tag: 5.2.3
+          ingress:
+            enabled: true
+            annotations:
+              nginx.ingress.kubernetes.io/rewrite-target: /
+              traefik.ingress.kubernetes.io/router.middlewares: example-redirect-https@kubernetescrd
+              cert-manager.io/cluster-issuer: letsencrypt-staging
+              spec.ingressClassName: traefik
+            ingressClassName: traefik
+            path: /
+            pathType: Prefix
+            hosts:
+            - "ltb.example.com"
+            tls: 
+              - secretName: ltb.example.com
+                hosts:
+                - ltb.example.com
+        phpldapadmin:
+          enabled: true
+          image:
+            tag: 0.9.0
+          env:
+            PHPLDAPADMIN_LDAP_CLIENT_TLS_REQCERT: "never"
+          ingress:
+            enabled: true
+            annotations:
+              nginx.ingress.kubernetes.io/rewrite-target: /
+              traefik.ingress.kubernetes.io/router.middlewares: example-redirect-https@kubernetescrd
+              cert-manager.io/cluster-issuer: letsencrypt-staging
+              spec.ingressClassName: traefik
+            ingressClassName: traefik
+            path: /
+            pathType: Prefix
+            hosts:
+            - phpldapadmin.example.com
+            tls:
+              - secretName: phpldapadmin.example.com
+                hosts:
+                - phpldapadmin.example.com
