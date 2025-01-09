@@ -11,7 +11,7 @@ spec:
       prune: true
       selfHeal: true
     syncOptions:
-    - ServerSideApply=true
+    - ServerSideApply=false
   source:
     path: openldap
     repoURL: https://github.com/joshuacox/argocd-tests.git
