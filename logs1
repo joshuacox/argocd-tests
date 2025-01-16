@@ -1,0 +1,225 @@
+[38;5;6m [38;5;5m16:24:18.22 [0m[38;5;2mINFO [0m ==> ** Starting LDAP setup **
+[38;5;6m [38;5;5m16:24:18.25 [0m[38;5;2mINFO [0m ==> Validating settings in LDAP_* env vars
+[38;5;6m [38;5;5m16:24:18.26 [0m[38;5;2mINFO [0m ==> Initializing OpenLDAP...
+[38;5;6m [38;5;5m16:24:18.26 [0m[38;5;5mDEBUG[0m ==> Ensuring expected directories/files exist...
+[38;5;6m [38;5;5m16:24:18.28 [0m[38;5;2mINFO [0m ==> Creating LDAP online configuration
+[38;5;6m [38;5;5m16:24:18.28 [0m[38;5;2mINFO [0m ==> Creating slapd.ldif
+[38;5;6m [38;5;5m16:24:18.30 [0m[38;5;2mINFO [0m ==> Starting OpenLDAP server in background
+678932b2.12f522cd 0x7d251c1fd740 @(#) $OpenLDAP: slapd 2.6.8 (Jul 22 2024 15:17:33) $
+	@5166997a1da7:/bitnami/blacksmith-sandox/openldap-2.6.8/servers/slapd
+678932b2.1d3b04c7 0x7d251c1fd740 slapd starting
+[38;5;6m [38;5;5m16:24:19.31 [0m[38;5;2mINFO [0m ==> Configure LDAP credentials for admin user
+SASL/EXTERNAL authentication started
+678932b3.134c572f 0x7d24db0006c0 conn=1000 fd=12 ACCEPT from PATH=/opt/bitnami/openldap/var/run/ldapi (PATH=/opt/bitnami/openldap/var/run/ldapi)
+678932b3.134ea35b 0x7d24db0006c0 conn=1000 op=0 BIND dn="" method=163
+678932b3.134f8614 0x7d24db0006c0 conn=1000 op=0 BIND authcid="gidNumber=0+uidNumber=1001,cn=peercred,cn=external,cn=auth" authzid="gidNumber=0+uidNumber=1001,cn=peercred,cn=external,cn=auth"
+678932b3.13500987 0x7d24db0006c0 conn=1000 op=0 BIND dn="gidNumber=0+uidNumber=1001,cn=peercred,cn=external,cn=auth" mech=EXTERNAL bind_ssf=0 ssf=71
+678932b3.13508f58 0x7d24db0006c0 conn=1000 op=0 RESULT tag=97 err=0 qtime=0.000011 etime=0.000152 text=
+SASL username: gidNumber=0+uidNumber=1001,cn=peercred,cn=external,cn=auth
+SASL SSF: 0
+678932b3.13552b84 0x7d24da6006c0 conn=1000 op=1 MOD dn="olcDatabase={2}mdb,cn=config"
+678932b3.13563554 0x7d24da6006c0 conn=1000 op=1 MOD attr=olcSuffix
+678932b3.135e8147 0x7d24da6006c0 conn=1000 op=1 RESULT tag=103 err=0 qtime=0.000023 etime=0.000673 text=
+678932b3.13607ce1 0x7d24db0006c0 conn=1000 op=2 MOD dn="olcDatabase={2}mdb,cn=config"
+678932b3.1360ecc1 0x7d24db0006c0 conn=1000 op=2 MOD attr=olcRootDN
+678932b3.13663e2c 0x7d24db0006c0 conn=1000 op=2 RESULT tag=103 err=0 qtime=0.000013 etime=0.000400 text=
+678932b3.13685372 0x7d24da6006c0 conn=1000 op=3 MOD dn="olcDatabase={2}mdb,cn=config"
+678932b3.1368f47e 0x7d24da6006c0 conn=1000 op=3 MOD attr=olcRootPW
+678932b3.136d0a04 0x7d24da6006c0 conn=1000 op=3 RESULT tag=103 err=0 qtime=0.000014 etime=0.000336 text=
+678932b3.136ee482 0x7d24db0006c0 conn=1000 op=4 MOD dn="olcDatabase={1}monitor,cn=config"
+678932b3.136f46a2 0x7d24db0006c0 conn=1000 op=4 MOD attr=olcAccess
+678932b3.13732d8f 0x7d24db0006c0 conn=1000 op=4 RESULT tag=103 err=0 qtime=0.000011 etime=0.000300 text=
+678932b3.1375bd01 0x7d24da6006c0 conn=1000 op=5 MOD dn="olcDatabase={0}config,cn=config"
+678932b3.13765b78 0x7d24da6006c0 conn=1000 op=5 MOD attr=olcRootDN
+678932b3.137b4ef8 0x7d24da6006c0 conn=1000 op=5 RESULT tag=103 err=0 qtime=0.000018 etime=0.000396 text=
+678932b3.137de69e 0x7d24db0006c0 conn=1000 op=6 MOD dn="olcDatabase={0}config,cn=config"
+678932b3.137e91fc 0x7d24db0006c0 conn=1000 op=6 MOD attr=olcRootPW
+678932b3.13830b3a 0x7d24db0006c0 conn=1000 op=6 RESULT tag=103 err=0 qtime=0.000013 etime=0.000357 text=
+678932b3.1386a9a2 0x7d24da6006c0 conn=1000 op=7 UNBIND
+678932b3.13878b7a 0x7d24da6006c0 conn=1000 fd=12 closed
+modifying entry "olcDatabase={2}mdb,cn=config"
+
+modifying entry "olcDatabase={2}mdb,cn=config"
+
+modifying entry "olcDatabase={2}mdb,cn=config"
+
+modifying entry "olcDatabase={1}monitor,cn=config"
+
+modifying entry "olcDatabase={0}config,cn=config"
+
+modifying entry "olcDatabase={0}config,cn=config"
+
+[38;5;6m [38;5;5m16:24:19.32 [0m[38;5;2mINFO [0m ==> Adding LDAP extra schemas
+SASL/EXTERNAL authentication started
+678932b3.14052ffc 0x7d24db0006c0 conn=1001 fd=12 ACCEPT from PATH=/opt/bitnami/openldap/var/run/ldapi (PATH=/opt/bitnami/openldap/var/run/ldapi)
+678932b3.14066856 0x7d24da6006c0 conn=1001 op=0 BIND dn="" method=163
+678932b3.14071c4d 0x7d24da6006c0 conn=1001 op=0 BIND authcid="gidNumber=0+uidNumber=1001,cn=peercred,cn=external,cn=auth" authzid="gidNumber=0+uidNumber=1001,cn=peercred,cn=external,cn=auth"
+678932b3.14076bb5 0x7d24da6006c0 conn=1001 op=0 BIND dn="gidNumber=0+uidNumber=1001,cn=peercred,cn=external,cn=auth" mech=EXTERNAL bind_ssf=0 ssf=71
+678932b3.1407cec4 0x7d24da6006c0 conn=1001 op=0 RESULT tag=97 err=0 qtime=0.000014 etime=0.000110 text=
+SASL username: gidNumber=0+uidNumber=1001,cn=peercred,cn=external,cn=auth
+SASL SSF: 0
+678932b3.140c8d45 0x7d24db0006c0 conn=1001 op=1 ADD dn="cn=cosine,cn=schema,cn=config"
+678932b3.141eb80b 0x7d24db0006c0 conn=1001 op=1 RESULT tag=105 err=0 qtime=0.000017 etime=0.001257 text=
+678932b3.1420cb49 0x7d24da6006c0 conn=1001 op=2 UNBIND
+678932b3.1421726a 0x7d24da6006c0 conn=1001 fd=12 closed
+adding new entry "cn=cosine,cn=schema,cn=config"
+
+SASL/EXTERNAL authentication started
+678932b3.145f3240 0x7d24db0006c0 conn=1002 fd=12 ACCEPT from PATH=/opt/bitnami/openldap/var/run/ldapi (PATH=/opt/bitnami/openldap/var/run/ldapi)
+678932b3.145ffdb8 0x7d24db0006c0 conn=1002 op=0 BIND dn="" method=163
+678932b3.14608f0c 0x7d24db0006c0 conn=1002 op=0 BIND authcid="gidNumber=0+uidNumber=1001,cn=peercred,cn=external,cn=auth" authzid="gidNumber=0+uidNumber=1001,cn=peercred,cn=external,cn=auth"
+678932b3.14610ee0 0x7d24db0006c0 conn=1002 op=0 BIND dn="gidNumber=0+uidNumber=1001,cn=peercred,cn=external,cn=auth" mech=EXTERNAL bind_ssf=0 ssf=71
+678932b3.1461ab85 0x7d24db0006c0 conn=1002 op=0 RESULT tag=97 err=0 qtime=0.000009 etime=0.000120 text=
+SASL username: gidNumber=0+uidNumber=1001,cn=peercred,cn=external,cn=auth
+SASL SSF: 0
+678932b3.14646620 0x7d24da6006c0 conn=1002 op=1 ADD dn="cn=dyngroup,cn=schema,cn=config"
+678932b3.1469d939 0x7d24da6006c0 conn=1002 op=1 RESULT tag=105 err=0 qtime=0.000012 etime=0.000383 text=
+adding new entry "cn=dyngroup,cn=schema,cn=config"
+
+678932b3.146bdaea 0x7d24db0006c0 conn=1002 op=2 UNBIND
+678932b3.146caf0c 0x7d24db0006c0 conn=1002 fd=12 closed
+SASL/EXTERNAL authentication started
+678932b3.14a4ece8 0x7d24da6006c0 conn=1003 fd=12 ACCEPT from PATH=/opt/bitnami/openldap/var/run/ldapi (PATH=/opt/bitnami/openldap/var/run/ldapi)
+678932b3.14a61757 0x7d24db0006c0 conn=1003 op=0 BIND dn="" method=163
+678932b3.14a6acfd 0x7d24db0006c0 conn=1003 op=0 BIND authcid="gidNumber=0+uidNumber=1001,cn=peercred,cn=external,cn=auth" authzid="gidNumber=0+uidNumber=1001,cn=peercred,cn=external,cn=auth"
+678932b3.14a6f9b9 0x7d24db0006c0 conn=1003 op=0 BIND dn="gidNumber=0+uidNumber=1001,cn=peercred,cn=external,cn=auth" mech=EXTERNAL bind_ssf=0 ssf=71
+678932b3.14a75df6 0x7d24db0006c0 conn=1003 op=0 RESULT tag=97 err=0 qtime=0.000015 etime=0.000101 text=
+SASL username: gidNumber=0+uidNumber=1001,cn=peercred,cn=external,cn=auth
+SASL SSF: 0
+678932b3.14aa4ec0 0x7d24da6006c0 conn=1003 op=1 ADD dn="cn=inetorgperson,cn=schema,cn=config"
+678932b3.14b09e8c 0x7d24da6006c0 conn=1003 op=1 RESULT tag=105 err=0 qtime=0.000012 etime=0.000438 text=
+678932b3.14b255e3 0x7d24db0006c0 conn=1003 op=2 UNBIND
+678932b3.14b3238b 0x7d24db0006c0 conn=1003 fd=12 closed
+adding new entry "cn=inetorgperson,cn=schema,cn=config"
+
+SASL/EXTERNAL authentication started
+678932b3.14ec5246 0x7d24da6006c0 conn=1004 fd=12 ACCEPT from PATH=/opt/bitnami/openldap/var/run/ldapi (PATH=/opt/bitnami/openldap/var/run/ldapi)
+678932b3.14ed32f5 0x7d24db0006c0 conn=1004 op=0 BIND dn="" method=163
+678932b3.14ede0ac 0x7d24db0006c0 conn=1004 op=0 BIND authcid="gidNumber=0+uidNumber=1001,cn=peercred,cn=external,cn=auth" authzid="gidNumber=0+uidNumber=1001,cn=peercred,cn=external,cn=auth"
+678932b3.14ee587f 0x7d24db0006c0 conn=1004 op=0 BIND dn="gidNumber=0+uidNumber=1001,cn=peercred,cn=external,cn=auth" mech=EXTERNAL bind_ssf=0 ssf=71
+678932b3.14eef2a3 0x7d24db0006c0 conn=1004 op=0 RESULT tag=97 err=0 qtime=0.000012 etime=0.000128 text=
+SASL username: gidNumber=0+uidNumber=1001,cn=peercred,cn=external,cn=auth
+SASL SSF: 0
+678932b3.14f33b3b 0x7d24da6006c0 conn=1004 op=1 ADD dn="cn=nis,cn=schema,cn=config"
+678932b3.14fd1c6c 0x7d24da6006c0 conn=1004 op=1 RESULT tag=105 err=0 qtime=0.000013 etime=0.000677 text=
+adding new entry "cn=nis,cn=schema,cn=config"
+
+678932b3.14ff1628 0x7d24db0006c0 conn=1004 op=2 UNBIND
+678932b3.14ffd4c1 0x7d24db0006c0 conn=1004 fd=12 closed
+[38;5;6m [38;5;5m16:24:19.35 [0m[38;5;2mINFO [0m ==> Configuring TLS
+SASL/EXTERNAL authentication started
+678932b3.158034b2 0x7d24da6006c0 conn=1005 fd=12 ACCEPT from PATH=/opt/bitnami/openldap/var/run/ldapi (PATH=/opt/bitnami/openldap/var/run/ldapi)
+678932b3.15812088 0x7d24db0006c0 conn=1005 op=0 BIND dn="" method=163
+678932b3.1581fd9d 0x7d24db0006c0 conn=1005 op=0 BIND authcid="gidNumber=0+uidNumber=1001,cn=peercred,cn=external,cn=auth" authzid="gidNumber=0+uidNumber=1001,cn=peercred,cn=external,cn=auth"
+678932b3.15828a26 0x7d24db0006c0 conn=1005 op=0 BIND dn="gidNumber=0+uidNumber=1001,cn=peercred,cn=external,cn=auth" mech=EXTERNAL bind_ssf=0 ssf=71
+678932b3.15833872 0x7d24db0006c0 conn=1005 op=0 RESULT tag=97 err=0 qtime=0.000014 etime=0.000155 text=
+SASL username: gidNumber=0+uidNumber=1001,cn=peercred,cn=external,cn=auth
+SASL SSF: 0
+678932b3.1585cfc9 0x7d24da6006c0 conn=1005 op=1 MOD dn="cn=config"
+678932b3.15862c04 0x7d24da6006c0 conn=1005 op=1 MOD attr=olcTLSCACertificateFile olcTLSCertificateFile olcTLSCertificateKeyFile olcTLSVerifyClient
+678932b3.15c40c83 0x7d24da6006c0 conn=1005 op=1 RESULT tag=103 err=0 qtime=0.000010 etime=0.004100 text=
+modifying entry "cn=config"
+
+678932b3.15c68a6e 0x7d24db0006c0 conn=1005 op=2 UNBIND
+678932b3.15c7cb40 0x7d24db0006c0 conn=1005 fd=12 closed
+[38;5;6m [38;5;5m16:24:19.37 [0m[38;5;2mINFO [0m ==> Loading custom LDIF files...
+[38;5;6m [38;5;5m16:24:19.37 [0m[38;5;3mWARN [0m ==> Ignoring LDAP_USERS, LDAP_PASSWORDS, LDAP_USER_DC and LDAP_GROUP environment variables...
+678932b3.16bd9483 0x7d24da6006c0 conn=1006 fd=12 ACCEPT from PATH=/opt/bitnami/openldap/var/run/ldapi (PATH=/opt/bitnami/openldap/var/run/ldapi)
+678932b3.16bf30a1 0x7d24db0006c0 conn=1006 op=0 BIND dn="cn=admin,dc=example,dc=com" method=128
+678932b3.16c006ea 0x7d24db0006c0 conn=1006 op=0 BIND dn="cn=admin,dc=example,dc=com" mech=SIMPLE bind_ssf=0 ssf=71
+678932b3.16c10a48 0x7d24db0006c0 conn=1006 op=0 RESULT tag=97 err=0 qtime=0.000016 etime=0.000156 text=
+678932b3.16c47ad9 0x7d24da6006c0 conn=1006 op=1 ADD dn="dc=example,dc=com"
+678932b3.1e8bbc55 0x7d24da6006c0 conn=1006 op=1 RESULT tag=105 err=0 qtime=0.000012 etime=0.130515 text=
+adding new entry "dc=example,dc=com"
+
+678932b3.1e8ec670 0x7d24db0006c0 conn=1006 op=2 UNBIND
+678932b3.1e8ffac7 0x7d24db0006c0 conn=1006 fd=12 closed
+678932b3.1f0e9a32 0x7d24da6006c0 conn=1007 fd=12 ACCEPT from PATH=/opt/bitnami/openldap/var/run/ldapi (PATH=/opt/bitnami/openldap/var/run/ldapi)
+678932b3.1f0fdeaf 0x7d24db0006c0 conn=1007 op=0 BIND dn="cn=admin,dc=example,dc=com" method=128
+678932b3.1f108a18 0x7d24db0006c0 conn=1007 op=0 BIND dn="cn=admin,dc=example,dc=com" mech=SIMPLE bind_ssf=0 ssf=71
+678932b3.1f1189d4 0x7d24db0006c0 conn=1007 op=0 RESULT tag=97 err=0 qtime=0.000015 etime=0.000143 text=
+678932b3.1f14d670 0x7d24da6006c0 conn=1007 op=1 ADD dn="cn=myGroup,dc=example,dc=com"
+678932b3.22c4e06c 0x7d24da6006c0 conn=1007 op=1 RESULT tag=105 err=0 qtime=0.000015 etime=0.061894 text=
+678932b3.22ca2981 0x7d24db0006c0 conn=1007 op=2 UNBIND
+678932b3.22cb15ad 0x7d24db0006c0 conn=1007 fd=12 closed
+adding new entry "cn=myGroup,dc=example,dc=com"
+
+678932b3.2341b59a 0x7d24da6006c0 conn=1008 fd=12 ACCEPT from PATH=/opt/bitnami/openldap/var/run/ldapi (PATH=/opt/bitnami/openldap/var/run/ldapi)
+678932b3.23433933 0x7d24db0006c0 conn=1008 op=0 BIND dn="cn=admin,dc=example,dc=com" method=128
+678932b3.2343d685 0x7d24db0006c0 conn=1008 op=0 BIND dn="cn=admin,dc=example,dc=com" mech=SIMPLE bind_ssf=0 ssf=71
+678932b3.234448ca 0x7d24db0006c0 conn=1008 op=0 RESULT tag=97 err=0 qtime=0.000015 etime=0.000103 text=
+678932b3.23466ebb 0x7d24da6006c0 conn=1008 op=1 ADD dn="ou=users,dc=example,dc=com"
+678932b3.25c70b7b 0x7d24da6006c0 conn=1008 op=1 RESULT tag=105 err=0 qtime=0.000012 etime=0.041998 text=
+678932b3.25c99a0f 0x7d24db0006c0 conn=1008 op=2 UNBIND
+678932b3.25ca7c9f 0x7d24db0006c0 conn=1008 fd=12 closed
+adding new entry "ou=users,dc=example,dc=com"
+
+678932b3.264d146b 0x7d24da6006c0 conn=1009 fd=12 ACCEPT from PATH=/opt/bitnami/openldap/var/run/ldapi (PATH=/opt/bitnami/openldap/var/run/ldapi)
+678932b3.264e89e4 0x7d24db0006c0 conn=1009 op=0 BIND dn="cn=admin,dc=example,dc=com" method=128
+678932b3.264f87d8 0x7d24db0006c0 conn=1009 op=0 BIND dn="cn=admin,dc=example,dc=com" mech=SIMPLE bind_ssf=0 ssf=71
+678932b3.26503926 0x7d24db0006c0 conn=1009 op=0 RESULT tag=97 err=0 qtime=0.000013 etime=0.000152 text=
+678932b3.2653066a 0x7d24da6006c0 conn=1009 op=1 ADD dn="cn=readers,ou=users,dc=example,dc=com"
+678932b3.2928cde7 0x7d24da6006c0 conn=1009 op=1 RESULT tag=105 err=0 qtime=0.000012 etime=0.047591 text=
+678932b3.292bb672 0x7d24db0006c0 conn=1009 op=2 UNBIND
+678932b3.292cce2a 0x7d24db0006c0 conn=1009 fd=12 closed
+adding new entry "cn=readers,ou=users,dc=example,dc=com"
+
+678932b3.295a06e3 0x7d24dba006c0 daemon: shutdown requested and initiated.
+678932b3.295d049d 0x7d24dba006c0 slapd shutdown: waiting for 0 operations/tasks to finish
+678932b3.296837b5 0x7d251c1fd740 slapd stopped.
+[38;5;6m [38;5;5m16:24:20.70 [0m[38;5;2mINFO [0m ==> ** LDAP setup finished! **
+
+[38;5;6m [38;5;5m16:24:20.74 [0m[38;5;2mINFO [0m ==> ** Starting slapd **
+678932b4.2cb3e41f 0x7e6e9d827740 @(#) $OpenLDAP: slapd 2.6.8 (Jul 22 2024 15:17:33) $
+	@5166997a1da7:/bitnami/blacksmith-sandox/openldap-2.6.8/servers/slapd
+678932b4.2d85e23a 0x7e6e9d827740 slapd starting
+678932b8.09aab11f 0x7e6e57e006c0 conn=1000 fd=14 ACCEPT from IP=10.42.0.1:46154 (IP=0.0.0.0:1389)
+678932b8.09ae9eb8 0x7e6e574006c0 conn=1000 fd=14 closed (connection lost)
+678932cc.09a4dfa5 0x7e6e57e006c0 conn=1001 fd=14 ACCEPT from IP=10.42.0.1:45070 (IP=0.0.0.0:1389)
+678932cc.09a5cc60 0x7e6e574006c0 conn=1002 fd=16 ACCEPT from IP=10.42.0.1:45072 (IP=0.0.0.0:1389)
+678932cc.09aa961e 0x7e6e574006c0 conn=1001 fd=14 closed (connection lost)
+678932cc.09add502 0x7e6e560006c0 conn=1002 fd=16 closed (connection lost)
+678932d6.09b09ba4 0x7e6e57e006c0 conn=1003 fd=14 ACCEPT from IP=10.42.0.1:49030 (IP=0.0.0.0:1389)
+678932d6.09b2674b 0x7e6e574006c0 conn=1003 fd=14 closed (connection lost)
+678932d6.09b28f9c 0x7e6e56a006c0 conn=1004 fd=16 ACCEPT from IP=10.42.0.1:49028 (IP=0.0.0.0:1389)
+678932d6.09b46778 0x7e6e574006c0 conn=1004 fd=16 closed (connection lost)
+678932e0.09a52611 0x7e6e57e006c0 conn=1005 fd=14 ACCEPT from IP=10.42.0.1:47802 (IP=0.0.0.0:1389)
+678932e0.09a620e7 0x7e6e560006c0 conn=1006 fd=16 ACCEPT from IP=10.42.0.1:47818 (IP=0.0.0.0:1389)
+678932e0.09a790d9 0x7e6e57e006c0 conn=1006 fd=16 closed (connection lost)
+678932e0.09a96be3 0x7e6e56a006c0 conn=1005 fd=14 closed (connection lost)
+678932ea.09a0978b 0x7e6e574006c0 conn=1007 fd=14 ACCEPT from IP=10.42.0.1:33094 (IP=0.0.0.0:1389)
+678932ea.09a1e292 0x7e6e560006c0 conn=1008 fd=16 ACCEPT from IP=10.42.0.1:33092 (IP=0.0.0.0:1389)
+678932ea.09a2c464 0x7e6e57e006c0 conn=1007 fd=14 closed (connection lost)
+678932ea.09a4344b 0x7e6e57e006c0 conn=1008 fd=16 closed (connection lost)
+678932f4.09a35985 0x7e6e574006c0 conn=1009 fd=14 ACCEPT from IP=10.42.0.1:49436 (IP=0.0.0.0:1389)
+678932f4.09a3f30c 0x7e6e560006c0 conn=1010 fd=16 ACCEPT from IP=10.42.0.1:49438 (IP=0.0.0.0:1389)
+678932f4.09a62894 0x7e6e574006c0 conn=1009 fd=14 closed (connection lost)
+678932f4.09a837b0 0x7e6e57e006c0 conn=1010 fd=16 closed (connection lost)
+678932fe.09a18470 0x7e6e560006c0 conn=1011 fd=14 ACCEPT from IP=10.42.0.1:41990 (IP=0.0.0.0:1389)
+678932fe.09a28366 0x7e6e56a006c0 conn=1012 fd=16 ACCEPT from IP=10.42.0.1:42006 (IP=0.0.0.0:1389)
+678932fe.09a60c9b 0x7e6e574006c0 conn=1011 fd=14 closed (connection lost)
+678932fe.09a80bdf 0x7e6e56a006c0 conn=1012 fd=16 closed (connection lost)
+67893308.09b0c52a 0x7e6e560006c0 conn=1013 fd=14 ACCEPT from IP=10.42.0.1:60556 (IP=0.0.0.0:1389)
+67893308.09b0dd46 0x7e6e57e006c0 conn=1014 fd=16 ACCEPT from IP=10.42.0.1:60554 (IP=0.0.0.0:1389)
+67893308.09b30483 0x7e6e57e006c0 conn=1014 fd=16 closed (connection lost)
+67893308.09b45b8a 0x7e6e56a006c0 conn=1013 fd=14 closed (connection lost)
+67893312.099ffc08 0x7e6e574006c0 conn=1015 fd=14 ACCEPT from IP=10.42.0.1:47408 (IP=0.0.0.0:1389)
+67893312.09a09058 0x7e6e560006c0 conn=1016 fd=15 ACCEPT from IP=10.42.0.1:47406 (IP=0.0.0.0:1389)
+67893312.09a2095e 0x7e6e574006c0 conn=1016 fd=15 closed (connection lost)
+67893312.09a39f38 0x7e6e57e006c0 conn=1015 fd=14 closed (connection lost)
+6789331c.09a1f9ed 0x7e6e56a006c0 conn=1017 fd=14 ACCEPT from IP=10.42.0.1:45682 (IP=0.0.0.0:1389)
+6789331c.09a40e1e 0x7e6e56a006c0 conn=1017 fd=14 closed (connection lost)
+6789331c.09a41710 0x7e6e560006c0 conn=1018 fd=16 ACCEPT from IP=10.42.0.1:45690 (IP=0.0.0.0:1389)
+6789331c.09a635ac 0x7e6e56a006c0 conn=1018 fd=16 closed (connection lost)
+67893326.09a7129b 0x7e6e574006c0 conn=1019 fd=14 ACCEPT from IP=10.42.0.1:48138 (IP=0.0.0.0:1389)
+67893326.09a80c72 0x7e6e57e006c0 conn=1020 fd=16 ACCEPT from IP=10.42.0.1:48124 (IP=0.0.0.0:1389)
+67893326.09a97536 0x7e6e560006c0 conn=1019 fd=14 closed (connection lost)
+67893326.09ab6585 0x7e6e57e006c0 conn=1020 fd=16 closed (connection lost)
+67893330.09b1f195 0x7e6e574006c0 conn=1021 fd=14 ACCEPT from IP=10.42.0.1:55284 (IP=0.0.0.0:1389)
+67893330.09b3809d 0x7e6e56a006c0 conn=1022 fd=15 ACCEPT from IP=10.42.0.1:55286 (IP=0.0.0.0:1389)
+67893330.09b55914 0x7e6e560006c0 conn=1021 fd=14 closed (connection lost)
+67893330.09b7c1b4 0x7e6e560006c0 conn=1022 fd=15 closed (connection lost)
+6789333a.09a4b33b 0x7e6e574006c0 conn=1023 fd=14 ACCEPT from IP=10.42.0.1:40552 (IP=0.0.0.0:1389)
+6789333a.09a6e6e5 0x7e6e57e006c0 conn=1023 fd=14 closed (connection lost)
+6789333a.09a812cb 0x7e6e56a006c0 conn=1024 fd=15 ACCEPT from IP=10.42.0.1:40556 (IP=0.0.0.0:1389)
+6789333a.09aa49a3 0x7e6e56a006c0 conn=1024 fd=15 closed (connection lost)
