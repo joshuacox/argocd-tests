@@ -1,5 +1,5 @@
 metadata:
-  name: openldap
+  name: openldap-example
   namespace: argocd
 spec:
   destination:
@@ -19,6 +19,7 @@ spec:
     helm:
       values: |
         global:
+          ldapDomain: "example.com"
           imageRegistry: ""
           adminUser: "admin"
           adminPassword: secret123 
@@ -28,6 +29,15 @@ spec:
           ldapPort: 389
           sslLdapPort: 636
         clusterDomain: cluster.local
+        image:
+          # From repository https://hub.docker.com/r/bitnami/openldap/
+          #repository: bitnami/openldap
+          #tag: 2.6.3
+          # Temporary fix
+          repository: jpgouin/openldap
+          tag: 2.6.8-fix
+          pullPolicy: Always
+          pullSecrets: []
         replicaCount: 1
         service:
           annotations:
@@ -43,13 +53,16 @@ spec:
          LDAP_CONFIG_ADMIN_ENABLED: "yes"
          LDAP_CONFIG_ADMIN_USERNAME: "config"
          LDAP_SKIP_DEFAULT_TREE: "no"
+         LDAP_ADMIN_USERNAME: "admin"
+         LDAP_ADMIN_PASSWORD: "secret123"
          LDAP_ORGANISATION: "example org"
          LDAP_READONLY_USER: "true"
          LDAP_READONLY_USER_USERNAME: "readonly"
          LDAP_READONLY_USER_PASSWORD: "secretreadonly"
-         LDAP_ROOT: "dc=ldap,dc=example,dc=com"
-         LDAP_ADMIN_DN: "cn=admin,dc=ldap,dc=example,dc=com"
+         LDAP_ROOT: "dc=example,dc=com"
+         LDAP_ADMIN_DN: "cn=admin,dc=example,dc=com"
          LDAP_EXTRA_SCHEMAS: "cosine,dyngroup,inetorgperson,nis"
+         # LDAP_CUSTOM_SCHEMA_DIR: "/opt/bitnami/openldap/etc/schema"
         pdb:
           enabled: false
           minAvailable: 1
@@ -81,25 +94,25 @@ spec:
         customLdifFiles:
           00-root.ldif: |-
             # Root creation
-            dn: dc=ldap,dc=example,dc=com
+            dn: dc=example,dc=com
             objectClass: dcObject
             objectClass: organization
             o: Example, Inc
           01-default-group.ldif: |-
-            dn: cn=myGroup,dc=ldap,dc=example,dc=com
+            dn: cn=myGroup,dc=example,dc=com
             cn: myGroup
             gidnumber: 500
             objectclass: posixGroup
             objectclass: top
           03-default-users.ldif: |-
-            dn: ou=users,dc=ldap,dc=example,dc=com
+            dn: ou=users,dc=example,dc=com
             objectClass: organizationalUnit
             ou: users
           04-default-readers.ldif: |-
-            dn: cn=readers,ou=users,dc=ldap,dc=example,dc=com
+            dn: cn=readers,ou=users,dc=example,dc=com
             cn: readers
             objectClass: groupOfNames
-            member: cn=Jean Dupond,dc=ldap,dc=example,dc=com
+            member: cn=Jean Dupond,dc=example,dc=com
         persistence:
           enabled: true
           accessModes:
@@ -119,8 +132,7 @@ spec:
             enabled: true
             annotations:
               nginx.ingress.kubernetes.io/rewrite-target: /
-              traefik.ingress.kubernetes.io/router.middlewares: example-redirect-https@kubernetescrd
-              cert-manager.io/cluster-issuer: letsencrypt-staging
+              cert-manager.io/cluster-issuer: mkcert-issuer
               spec.ingressClassName: traefik
             ingressClassName: traefik
             path: /
@@ -141,15 +153,14 @@ spec:
             enabled: true
             annotations:
               nginx.ingress.kubernetes.io/rewrite-target: /
-              traefik.ingress.kubernetes.io/router.middlewares: example-redirect-https@kubernetescrd
-              cert-manager.io/cluster-issuer: letsencrypt-staging
+              cert-manager.io/cluster-issuer: mkcert-issuer
               spec.ingressClassName: traefik
             ingressClassName: traefik
             path: /
             pathType: Prefix
             hosts:
-            - phpldapadmin.example.com
+            - hello.10.0.0.5.nip.io
             tls:
               - secretName: phpldapadmin.example.com
                 hosts:
-                - phpldapadmin.example.com
+                - hello.10.0.0.5.nip.io
