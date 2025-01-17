@@ -14,7 +14,7 @@ spec:
     - ServerSideApply=true
   source:
     path: nextcloud
-    repoURL: https://github.com/joshuacox/argo-tests.git
+    repoURL: https://github.com/joshuacox/argocd-tests.git
     targetRevision: HEAD
     helm:
       values: |
