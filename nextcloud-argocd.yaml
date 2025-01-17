@@ -48,7 +48,7 @@ spec:
           enabled: true
           # className: nginx
           tls:
-            - secretName: nextcloud-examplefinancial-tls
+            - secretName: nextcloud-example-tls
               hosts:
                 - nextcloud.example.com
           hosts: [ nextcloud.example.com ]
