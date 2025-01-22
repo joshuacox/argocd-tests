@@ -19,6 +19,3 @@ kubectl describe clusterissuer letsencrypt-production
 kubectl describe clusterissuer mkcert-issuer 
 kubectl create deployment nginx --image nginx:alpine 
 kubectl expose deployment nginx --port 80 --target-port 80
-kubectl apply -f secrets.yml
-#kubectl apply -f ingress-nginx.yaml
-kubectl get cert -n default
