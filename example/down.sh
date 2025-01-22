@@ -1,4 +1,5 @@
 #!/bin/bash
+main () {
 kind delete cluster
 exit 0
 kubectl delete -f postgres.yaml
@@ -10,3 +11,5 @@ sleep 3
 kubectl delete -n example pvc examplenc-nextcloud-nextcloud
 kubectl delete -n example pvc examplenc-nextcloud-nextcloud-data
 kubectl delete -n example pvc postgres-db-examplenc-postgres-1-0
+}
+time main
