@@ -11,5 +11,4 @@ kubectl_native_wait () {
     echo 'ERROR: wrong number of arguments!'
     echo "$0 NAMESPACE POD"
   fi
-
 }
