@@ -5,12 +5,9 @@ set -eux
 kind create cluster --config=kind-config.yaml
 kubectl apply -f https://kind.sigs.k8s.io/examples/ingress/deploy-ingress-nginx.yaml
 sleep 3
-kubectl wait --namespace ingress-nginx \
-  --for=condition=ready pod \
-  --selector=app.kubernetes.io/component=controller \
-  --timeout=90s
 cd $this_cwd
 cd ../
+./addCharts.sh
 ./openebs.sh
 ./certmanager.sh
 ./argocd.sh
@@ -21,8 +18,12 @@ kubectl apply -f namespace.yaml
 sleep 3
 kubectl apply -f examplenc-secrets.yaml
 kubectl_native_wait kubegres-system kubegres-controller-manager
-kubectl apply -f argocd-ingress.yaml
 kubectl apply -f postgres.yaml
+kubectl wait --namespace ingress-nginx \
+  --for=condition=ready pod \
+  --selector=app.kubernetes.io/component=controller \
+  --timeout=90s
+kubectl apply -f argocd-ingress.yaml
 sleep 3
 kubectl_native_wait example $(kubectl get po -n example|grep examplenc-postgres|cut -f1 -d ' ')
 argocd admin initial-password -n argocd
