@@ -1,7 +1,7 @@
 #!/bin/bash
 THIS_NAME=example
 
-KEY_FILE=./.${THIS_NAME}nc-plain-secres.yaml
+KEY_FILE=./.${THIS_NAME}nc-plain-secrets.yaml
 SECRET_FILE=./${THIS_NAME}nc-secrets.yaml 
 
 liner () {

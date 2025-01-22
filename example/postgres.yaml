@@ -44,7 +44,7 @@ spec:
 
    database:
       size: 8000Mi
-      storageClassName: openebs-lvmpv
+      storageClassName: example-hostpath
 
    customConfig: examplenc-postgres-conf
 

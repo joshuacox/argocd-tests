@@ -53,11 +53,10 @@ spec:
                 - nextcloud.example.com
           hosts: [ nextcloud.example.com ]
           annotations:
+            kubernetes.io/ingress.class: nginx
+            nginx.ingress.kubernetes.io/ssl-passthrough: "true"
             nginx.ingress.kubernetes.io/rewrite-target: /
-            traefik.ingress.kubernetes.io/router.middlewares: example-redirect-https@kubernetescrd
-            traefik.ingress.kubernetes.io/service.sticky.cookie: "true"
             cert-manager.io/cluster-issuer: mkcert-issuer
-            spec.ingressClassName: traefik
           labels: {}
           path: /
           pathType: Prefix
@@ -87,7 +86,7 @@ spec:
           containerPort: 80
           datadir: /var/www/html/data
           persistence:
-            storageClass: "openebs-lvmpv"
+            storageClass: "example-hostpath"
             subPath:
           # if set, we'll template this list to the NEXTCLOUD_TRUSTED_DOMAINS env var
           trustedDomains:
@@ -304,7 +303,7 @@ spec:
             databaseKey: db-name
         
           global:
-            defaultStorageClass: "openebs-lvmpv"
+            defaultStorageClass: "example-hostpath"
         
           auth:
             database: nextcloud
@@ -336,7 +335,7 @@ spec:
           primary:
             persistence:
               enabled: true
-              storageClass: "openebs-lvmpv"
+              storageClass: "example-hostpath"
         redis:
           enabled: false
           auth:
@@ -344,7 +343,7 @@ spec:
             existingSecret: "examplenc-secrets"
             existingSecretPasswordKey: "redis-pass"
           global:
-            storageClass: "openebs-lvmpv"
+            storageClass: "example-hostpath"
           master:
             persistence:
               enabled: true
@@ -371,13 +370,12 @@ spec:
               passwordKey: "collabora-password"
           ingress:
             enabled: true
-            className: "traefik"
+            className: "nginx"
             annotations:
+              kubernetes.io/ingress.class: nginx
+              nginx.ingress.kubernetes.io/ssl-passthrough: "true"
               nginx.ingress.kubernetes.io/rewrite-target: /
-              traefik.ingress.kubernetes.io/router.middlewares: example-redirect-https@kubernetescrd
-              traefik.ingress.kubernetes.io/service.sticky.cookie: "true"
               cert-manager.io/cluster-issuer: mkcert-issuer
-              spec.ingressClassName: traefik
             hosts:
               - host: collabora.example.com
                 paths:
@@ -406,8 +404,8 @@ spec:
         persistence:
           enabled: true
           annotations:
-          storageClass: "openebs-lvmpv"
-          storageClassName: "openebs-lvmpv"
+          storageClass: "example-hostpath"
+          storageClassName: "example-hostpath"
         
           accessMode: ReadWriteOnce
           size: 8Gi
@@ -417,8 +415,8 @@ spec:
             subPath:
             annotations: {}
             # storageClass: "-"
-            # storageClass: "openebs-lvmpv"
-            storageClass: "openebs-lvmpv"
+            # storageClass: "example-hostpath"
+            storageClass: "example-hostpath"
             # existingClaim:
             accessMode: ReadWriteOnce
             size: 8Gi

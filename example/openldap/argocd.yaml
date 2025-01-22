@@ -109,7 +109,7 @@ spec:
           accessModes:
             - ReadWriteOnce
           size: 8Gi
-          storageClass: "openebs-lvmpv"
+          storageClass: "example-hostpath"
         serviceAccount:
           create: true
           name: ""
@@ -122,10 +122,12 @@ spec:
           ingress:
             enabled: true
             annotations:
+              kubernetes.io/ingress.class: nginx
+              nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+              nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
               nginx.ingress.kubernetes.io/rewrite-target: /
               cert-manager.io/cluster-issuer: mkcert-issuer
-              spec.ingressClassName: traefik
-            ingressClassName: traefik
+            ingressClassName: nginx
             path: /
             pathType: Prefix
             hosts:
@@ -143,15 +145,16 @@ spec:
           ingress:
             enabled: true
             annotations:
+              nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+              nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
               nginx.ingress.kubernetes.io/rewrite-target: /
               cert-manager.io/cluster-issuer: mkcert-issuer
-              spec.ingressClassName: traefik
-            ingressClassName: traefik
+            ingressClassName: nginx
             path: /
             pathType: Prefix
             hosts:
-            - hello.96.43.139.94.nip.io
+            - phpldapadmin.example.com
             tls:
               - secretName: phpldapadmin.example.com
                 hosts:
-                - hello.96.43.139.94.nip.io
+                - phpldapadmin.example.com

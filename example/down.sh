@@ -1,4 +1,6 @@
 #!/bin/bash
+kind delete cluster
+exit 0
 kubectl delete -f postgres.yaml
 yes y|argocd app delete examplenc --grpc-web
 yes y|argocd app delete example-openldap --grpc-web
