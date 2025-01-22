@@ -16,8 +16,11 @@ else
   echo "usage: $0 file_to_check"
 fi
 }
-phile_checkr $SECRET_FILE
-phile_checkr $KEY_FILE
+
+if [[ ! $1 == '--force' ]]; then
+  phile_checkr $SECRET_FILE
+  phile_checkr $KEY_FILE
+fi
 
 liner () {
   echo "  $1 $2" >> $SECRET_FILE
@@ -55,18 +58,19 @@ type: Opaque
 stringData:
 EOF
 # munge the date
-munger  nextcloud-username: ncadmin
-munger  nextcloud-password: 
-munger  nextcloud-token: 
-munger  smtp-username: mailadmin@${THIS_NAME}.com
-munger  smtp-password: 
-munger  smtp-host: mail.${THIS_NAME}.com
+munger  argocdadmin-password: 
+munger  collabora-username: collabadmin
+munger  collabora-password: 
 munger  db-password: 
 munger  db-hostname: "${THIS_NAME}nc-postgres:5432"
 munger  db-name: ${THIS_NAME}ncdb
 munger  db-username: ${THIS_NAME}nc
 munger  db-admin-pass: 
+munger  nextcloud-username: ncadmin
+munger  nextcloud-password: 
+munger  nextcloud-token: 
 munger  redis-pass: 
-munger  collabora-username: collabadmin
-munger  collabora-password: 
 munger  replicationUserPassword:
+munger  smtp-username: mailadmin@${THIS_NAME}.com
+munger  smtp-password: 
+munger  smtp-host: mail.${THIS_NAME}.com
