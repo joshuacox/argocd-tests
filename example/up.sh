@@ -32,8 +32,10 @@ main () {
   echo 'use ./continue.sh if this fails'
   sleep 5
 
-  #argocd app create -f openldap/argocd.yaml --name example-openldap --grpc-web
+  argocd app create -f openldap/argocd.yaml --name example-openldap --grpc-web
   argocd app create -f nc/argocd.yaml --name examplenc --grpc-web
+  cd bao
+  ./openbao.sh
 }
 
 time main
