@@ -19,3 +19,7 @@ spec:
     helm:
       valueFiles:
         - ../example/nc/values.yaml
+        - ../example/nc/values_mods.yaml
+      values: |
+        ## Official nextcloud image version
+        ## ref: https://hub.docker.com/r/library/nextcloud/tags/

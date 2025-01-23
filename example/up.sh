@@ -5,24 +5,8 @@ this_cwd=$(pwd)
 main () {
   #set -eux
   set -eu
-  kind create cluster --config=kind-config.yaml
-  kubectl apply -f https://kind.sigs.k8s.io/examples/ingress/deploy-ingress-nginx.yaml
-  cd $this_cwd
-  cd ../
-  ./addCharts.sh
-  ./openebs.sh
-  ./certmanager.sh
-  ./argocd.sh
-  ./kubegres.sh
-  cd $this_cwd
-  kubectl apply -f namespace.yaml
-  kubectl apply -f openebs-hostpath.yaml
   ./secrets.sh
   kubectl apply -f examplenc-secrets.yaml
-  set +e
-  w8_pod kubegres-system kubegres-controller-manager
-  kubectl_native_wait kubegres-system $(kubectl get po -n kubegres-system|grep kubegres-controller-manager|cut -f1 -d ' ')
-  set -e
   kubectl apply -f postgres.yaml
   set +e
   kubectl wait --namespace ingress-nginx \
@@ -30,28 +14,10 @@ main () {
     --selector=app.kubernetes.io/component=controller \
     --timeout=90s
   set -e
-  kubectl apply -f argocd-ingress.yaml
   #sleep 3
   set +e
-  w8_ingress argocd argocd-server-ingress 
   kubectl_native_wait example $(kubectl get po -n example|grep examplenc-postgres|cut -f1 -d ' ')
   set -e
-  argocd admin initial-password -n argocd
-  PASSWORD_ARGO=$(argocd admin initial-password -n argocd|head -n 1)
-  argocd login argocd.example.com \
-    --password ${PASSWORD_ARGO} \
-    --username admin \
-    --grpc-web
-  admin_pass=$(yq '.stringData|."argocdadmin-password"' .examplenc-plain-secrets.yaml|sed 's/"//g')
-  admin_pass=${admin_pass//$'\n'/}
-  argocd account update-password \
-    --current-password ${PASSWORD_ARGO} \
-    --new-password  ${admin_pass} \
-    --grpc-web
-  argocd login argocd.example.com \
-    --password  ${admin_pass} \
-    --username admin \
-    --grpc-web
 
   w8_pod kube-system kube-proxy
   w8_pod openebs openebs-lvm-localpv-controller
@@ -61,12 +27,12 @@ main () {
   w8_pod argocd argocd-repo-server
   w8_pod ingress-nginx ingress-nginx-controller
 
-  # sometimes github.com fails to resolve if these creates hit too quick
-  # still investigating as to what is causing it
-  # leaving a sleep for now
+  echo 'sometimes github.com fails to resolve if these creates hit too quick'
+  echo 'still investigating as to what is causing it'
+  echo 'use ./continue.sh if this fails'
   sleep 5
 
-  argocd app create -f openldap/argocd.yaml --name example-openldap --grpc-web
+  #argocd app create -f openldap/argocd.yaml --name example-openldap --grpc-web
   argocd app create -f nc/argocd.yaml --name examplenc --grpc-web
 }
 
