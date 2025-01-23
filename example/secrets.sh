@@ -8,8 +8,7 @@ phile_checkr () {
 if [[ $# -eq 1 ]]; then
 TARGET_FILE=$1
   if [[ -f $TARGET_FILE ]]; then
-    echo "$TARGET_FILE exists, leaving untouched"
-    exit 0
+    echo "$TARGET_FILE exists, leaving untouched"; exit 0
   fi
 else
   echo "Wrong number of args! $#"
@@ -28,14 +27,30 @@ liner () {
 }
 
 munger () {
-  if [[ $# -eq 2 ]]; then
-    based=$(echo -n $2 | base64)
-    liner $1 $based $2
-  else
-    SECRET=$(openssl rand -base64 33)
-    based=$(echo -n $SECRET | base64)
-    liner $1 $based $SECRET
+  if [[ $# -eq 0 ]]; then
+      echo 'ERROR: no args!'; exit 1
   fi
+  KEY_NAME=$1
+  if [[ $# -eq 2 ]]; then
+    SECRET=$2
+  elif [[ $# -eq 3 ]]; then
+    PASS_LENGTH=$2
+    RANDO_METHOD=$3
+    if [[ ${RANDO_METHOD} == 'tr' ]]; then
+      SECRET=$(< /dev/random tr -dc _A-Z-a-z-0-9 | head -c${PASS_LENGTH})
+    elif [[ ${RANDO_METHOD} == 'pwgen' ]]; then
+      SECRET=pwgen ${PASS_LENGTH} 1
+    elif [[ ${RANDO_METHOD} == 'openssl' ]]; then
+      SECRET=$(openssl rand -base64 ${PASS_LENGTH})
+    else
+      echo 'ERROR: unrecognized method!'; exit 1
+    fi
+  else
+    PASS_LENGTH='23'
+    SECRET=$(pwgen ${PASS_LENGTH} 1)
+  fi
+  based=$(echo -n ${SECRET} | base64)
+  liner ${KEY_NAME} $based ${SECRET}
 }
 
 # make the headers
@@ -58,19 +73,19 @@ type: Opaque
 stringData:
 EOF
 # munge the date
-munger  argocdadmin-password: 
-munger  collabora-username: collabadmin
-munger  collabora-password: 
-munger  db-password: 
-munger  db-hostname: "${THIS_NAME}nc-postgres:5432"
-munger  db-name: ${THIS_NAME}ncdb
-munger  db-username: ${THIS_NAME}nc
-munger  db-admin-pass: 
-munger  nextcloud-username: ncadmin
-munger  nextcloud-password: 
-munger  nextcloud-token: 
-munger  redis-pass: 
-munger  replicationUserPassword:
-munger  smtp-username: mailadmin@${THIS_NAME}.com
-munger  smtp-password: 
-munger  smtp-host: mail.${THIS_NAME}.com
+munger  "argocdadmin-password:" "31" "tr"
+munger  "collabora-username:" "collabadmin"
+munger "collabora-password:" 
+munger "db-password:" 
+munger "db-hostname:" "${THIS_NAME}nc-postgres:5432"
+munger "db-name:" "${THIS_NAME}ncdb"
+munger "db-username:" "${THIS_NAME}nc"
+munger "db-admin-pass:" 
+munger "nextcloud-username:" "ncadmin"
+munger "nextcloud-password:" 
+munger "nextcloud-token:" 
+munger "redis-pass:" 
+munger "replicationUserPassword:"
+munger "smtp-username:" "mailadmin@${THIS_NAME}.com"
+munger "smtp-password:" 
+munger "smtp-host:" "mail.${THIS_NAME}.com"

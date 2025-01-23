@@ -40,13 +40,16 @@ main () {
   PASSWORD_ARGO=$(argocd admin initial-password -n argocd|head -n 1)
   argocd login argocd.example.com \
     --password ${PASSWORD_ARGO} \
-    --username admin
+    --username admin \
+    --grpc-web
   argocd account update-password \
-    --password ${PASSWORD_ARGO} \
-    --new-password  $(yq '.stringData|."argocdadmin-password"' .examplenc-plain-secrets.yaml)
+    --current-password ${PASSWORD_ARGO} \
+    --new-password  $(yq '.stringData|."argocdadmin-password"' .examplenc-plain-secrets.yaml) \
+    --grpc-web
   argocd login argocd.example.com \
     --password  $(yq '.stringData|."argocdadmin-password"' .examplenc-plain-secrets.yaml) \
-    --username admin
+    --username admin \
+    --grpc-web
   argocd app create -f openldap/argocd.yaml --name example-openldap --grpc-web
   argocd app create -f nc/argocd.yaml --name examplenc --grpc-web
 }
