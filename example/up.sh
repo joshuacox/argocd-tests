@@ -42,14 +42,25 @@ main () {
     --password ${PASSWORD_ARGO} \
     --username admin \
     --grpc-web
+  admin_pass=$(yq '.stringData|."argocdadmin-password"' .examplenc-plain-secrets.yaml|sed 's/"//g')
+  admin_pass=${admin_pass//$'\n'/}
   argocd account update-password \
     --current-password ${PASSWORD_ARGO} \
-    --new-password  $(yq '.stringData|."argocdadmin-password"' .examplenc-plain-secrets.yaml) \
+    --new-password  ${admin_pass} \
     --grpc-web
   argocd login argocd.example.com \
-    --password  $(yq '.stringData|."argocdadmin-password"' .examplenc-plain-secrets.yaml) \
+    --password  ${admin_pass} \
     --username admin \
     --grpc-web
+
+  w8_pod kube-system kube-proxy
+  w8_pod openebs openebs-lvm-localpv-controller
+  w8_pod local-path-storage local-path-provisioner
+  w8_pod cert-manager cert-manager
+  w8_pod argocd argocd-server 
+  w8_pod argocd argocd-repo-server
+  w8_pod ingress-nginx ingress-nginx-controller
+
   argocd app create -f openldap/argocd.yaml --name example-openldap --grpc-web
   argocd app create -f nc/argocd.yaml --name examplenc --grpc-web
 }
