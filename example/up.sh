@@ -61,6 +61,11 @@ main () {
   w8_pod argocd argocd-repo-server
   w8_pod ingress-nginx ingress-nginx-controller
 
+  # sometimes github.com fails to resolve if these creates hit too quick
+  # still investigating as to what is causing it
+  # leaving a sleep for now
+  sleep 5
+
   argocd app create -f openldap/argocd.yaml --name example-openldap --grpc-web
   argocd app create -f nc/argocd.yaml --name examplenc --grpc-web
 }

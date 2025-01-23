@@ -33,10 +33,11 @@ ingress:
         - nextcloud.example.com
   hosts: [ nextcloud.example.com ]
   annotations:
-    kubernetes.io/ingress.class: nginx
-    nginx.ingress.kubernetes.io/ssl-passthrough: "true"
     nginx.ingress.kubernetes.io/rewrite-target: /
+    traefik.ingress.kubernetes.io/router.middlewares: example-redirect-https@kubernetescrd
+    traefik.ingress.kubernetes.io/service.sticky.cookie: "true"
     cert-manager.io/cluster-issuer: mkcert-issuer
+    spec.ingressClassName: traefik
   labels: {}
   path: /
   pathType: Prefix
@@ -66,7 +67,7 @@ nextcloud:
   containerPort: 80
   datadir: /var/www/html/data
   persistence:
-    storageClass: "example-hostpath"
+    storageClass: "openebs-lvmpv"
     subPath:
   # if set, we'll template this list to the NEXTCLOUD_TRUSTED_DOMAINS env var
   trustedDomains:
@@ -283,7 +284,7 @@ externalDatabase:
     databaseKey: db-name
 
   global:
-    defaultStorageClass: "example-hostpath"
+    defaultStorageClass: "openebs-lvmpv"
 
   auth:
     database: nextcloud
@@ -315,7 +316,7 @@ postgresql:
   primary:
     persistence:
       enabled: true
-      storageClass: "example-hostpath"
+      storageClass: "openebs-lvmpv"
 redis:
   enabled: false
   auth:
@@ -323,7 +324,7 @@ redis:
     existingSecret: "examplenc-secrets"
     existingSecretPasswordKey: "redis-pass"
   global:
-    storageClass: "example-hostpath"
+    storageClass: "openebs-lvmpv"
   master:
     persistence:
       enabled: true
@@ -350,12 +351,13 @@ collabora:
       passwordKey: "collabora-password"
   ingress:
     enabled: true
-    className: "nginx"
+    className: "traefik"
     annotations:
-      kubernetes.io/ingress.class: nginx
-      nginx.ingress.kubernetes.io/ssl-passthrough: "true"
       nginx.ingress.kubernetes.io/rewrite-target: /
+      traefik.ingress.kubernetes.io/router.middlewares: example-redirect-https@kubernetescrd
+      traefik.ingress.kubernetes.io/service.sticky.cookie: "true"
       cert-manager.io/cluster-issuer: mkcert-issuer
+      spec.ingressClassName: traefik
     hosts:
       - host: collabora.example.com
         paths:
@@ -384,8 +386,8 @@ service:
 persistence:
   enabled: true
   annotations:
-  storageClass: "example-hostpath"
-  storageClassName: "example-hostpath"
+  storageClass: "openebs-lvmpv"
+  storageClassName: "openebs-lvmpv"
 
   accessMode: ReadWriteOnce
   size: 8Gi
@@ -395,8 +397,8 @@ persistence:
     subPath:
     annotations: {}
     # storageClass: "-"
-    # storageClass: "example-hostpath"
-    storageClass: "example-hostpath"
+    # storageClass: "openebs-lvmpv"
+    storageClass: "openebs-lvmpv"
     # existingClaim:
     accessMode: ReadWriteOnce
     size: 8Gi
