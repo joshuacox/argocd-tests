@@ -14,6 +14,7 @@ main () {
   w8_pod ingress-nginx ingress-nginx-controller
 
   kubectl get po -A
+  argocd app create -f kube-prometheus-stack/argocd.yaml --name example-prometheus-stack --grpc-web
   argocd app create -f openldap/argocd.yaml --name example-openldap --grpc-web
   argocd app create -f nc/argocd.yaml --name examplenc --grpc-web
   cd bao

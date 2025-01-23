@@ -25,6 +25,10 @@ main () {
   kubectl apply -f argocd-ingress.yaml
   #sleep 3
   set +e
+  sleep 3
+  set -x
+  kubectl get pod -A
+  kubectl get ingress -A
   w8_ingress argocd argocd-server-ingress 
 
   argocd admin initial-password -n argocd

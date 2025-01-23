@@ -1,6 +1,6 @@
 global:
   enabled: true
-  namespace: "example"
+  namespace: example
   tlsDisable: true
   serverTelemetry:
     prometheusOperator: true
@@ -19,12 +19,11 @@ server:
     enabled: true
     annotations:
       nginx.ingress.kubernetes.io/rewrite-target: /
-      traefik.ingress.kubernetes.io/router.middlewares: example-redirect-https@kubernetescrd
-      cert-manager.io/cluster-issuer: letsencrypt-production
-      spec.ingressClassName: traefik
+      cert-manager.io/cluster-issuer: mkcert-issuer
+      spec.ingressClassName: nginx
     # Optionally use ingressClassName instead of deprecated annotation.
     # See: https://kubernetes.io/docs/concepts/services-networking/ingress/#deprecated-annotation
-    ingressClassName: "traefik"
+    ingressClassName: "nginx"
     activeService: true
     hosts:
       - host: bao.example.com
