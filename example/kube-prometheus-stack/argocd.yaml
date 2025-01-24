@@ -13,7 +13,7 @@ spec:
     helm:
       valueFiles:
         - ../example/kube-prometheus-stack/values.yaml
-        - ../example/kube-prometheus-stack/.secret_values.yaml
+        - ../example/kube-prometheus-stack/secret_values.yaml
   syncPolicy:
     automated:
       prune: true
