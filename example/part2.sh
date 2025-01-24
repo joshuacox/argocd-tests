@@ -13,7 +13,3 @@ main () {
 }
 
 time main
-
-exit 0
-kubectl apply -f foobar.yaml
-kubectl get pod -A --watch

@@ -17,10 +17,7 @@ main () {
   argocd app create -f nc/argocd.yaml --name examplenc --grpc-web
   cd bao
   ./openbao.sh
+  kubectl apply -f bao/openbaoui-ingress.yaml
 }
 
 time main
-
-exit 0
-kubectl apply -f foobar.yaml
-kubectl get pod -A --watch
