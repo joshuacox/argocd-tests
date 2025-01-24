@@ -113,7 +113,6 @@ w8_ingress () {
   TARGET_NAMESPACE=$1
   ingress_name=$2
   squawk 3 "Wait on the K8S ingress $ingress_name to become available in the $TARGET_NAMESPACE namespace"
-  sleep 5
   # while loop
   countone_w8_ingress=1
   countlimit_w8_ingress=151
@@ -125,7 +124,7 @@ w8_ingress () {
       squawk 105  "kubectl --kubeconfig=$KUBECONFIG get ingress -n $TARGET_NAMESPACE $ingress_name"
       kubectl --kubeconfig=$KUBECONFIG get ingress -n $TARGET_NAMESPACE $ingress_name
     fi
-    result=$(kubectl --kubeconfig=$KUBECONFIG get ingress -n $TARGET_NAMESPACE $ingress_name | grep -v NotReady | grep Ready)
+    result=$(kubectl --kubeconfig=$KUBECONFIG get ingress -n $TARGET_NAMESPACE $ingress_name)
     squawk 133 "Result is $result"
     if [[ "$result" ]]; then
       squawk 5 "Result nailed $result"
