@@ -6,3 +6,6 @@
 127.0.0.1 argocd.example.com
 127.0.0.1 collabora.example.com
 127.0.0.1 nextcloud.example.com
+127.0.0.1 grafana.example.com
+127.0.0.1 alertmanager.example.com
+127.0.0.1 prometheus.example.com
