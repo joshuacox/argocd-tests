@@ -28,7 +28,7 @@ main () {
   sleep 3
   set -x
   w8_ingress argocd argocd-server-ingress 
-  sleep 2
+  sleep 5
 
   ./argocd-init-pass.sh
 
