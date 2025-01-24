@@ -5,39 +5,41 @@ this_cwd=$(pwd)
 main () {
   #set -eux
   set -eu
-  ./secrets.sh
-  kubectl apply -f examplenc-secrets.yaml
-  kubectl apply -f postgres.yaml
+  kind create cluster --config=kind-config.yaml
+  kubectl apply -f https://kind.sigs.k8s.io/examples/ingress/deploy-ingress-nginx.yaml
+  cd $this_cwd
+  cd ../
+  ./addCharts.sh
+  ./openebs.sh
+  ./certmanager.sh
+  ./argocd.sh
+  ./kubegres.sh
+  cd $this_cwd
+  kubectl apply -f namespace.yaml
+  kubectl apply -f openebs-hostpath.yaml
+
   set +e
-  kubectl wait --namespace ingress-nginx \
-    --for=condition=ready pod \
-    --selector=app.kubernetes.io/component=controller \
-    --timeout=90s
-  kubectl_native_wait example $(kubectl get po -n example|grep examplenc-postgres|cut -f1 -d ' ')
+  w8_pod kubegres-system kubegres-controller-manager
+  kubectl_native_wait kubegres-system $(kubectl get po -n kubegres-system|grep kubegres-controller-manager|cut -f1 -d ' ')
   set -e
+  kubectl apply -f argocd-ingress.yaml
+  #sleep 3
+  set +e
+  sleep 3
+  set -x
+  w8_ingress argocd argocd-server-ingress 
+  sleep 2
 
-  w8_pod kube-system kube-proxy
-  w8_pod openebs openebs-lvm-localpv-controller
-  w8_pod local-path-storage local-path-provisioner
-  w8_pod cert-manager cert-manager
-  w8_pod argocd argocd-server 
-  w8_pod argocd argocd-repo-server
-  w8_pod ingress-nginx ingress-nginx-controller
+  ./argocd-init-pass.sh
 
-  echo 'sometimes github.com fails to resolve if these creates hit too quick'
-  echo 'still investigating as to what is causing it'
-  echo 'use ./continue.sh if this fails'
-  sleep 5
-
-  argocd app create -f kube-prometheus-stack/argocd.yaml --name example-prometheus-stack --grpc-web
-  argocd app create -f openldap/argocd.yaml --name example-openldap --grpc-web
-  argocd app create -f nc/argocd.yaml --name examplenc --grpc-web
-  cd bao
-  ./openbao.sh
+  ./part2.sh
 }
 
 time main
 
 exit 0
+
+kubectl get pod -A
+kubectl get ingress -A
 kubectl apply -f foobar.yaml
 kubectl get pod -A --watch

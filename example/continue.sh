@@ -5,15 +5,13 @@ this_cwd=$(pwd)
 main () {
   #set -eux
   set -eu
-  w8_pod kube-system kube-proxy
-  w8_pod openebs openebs-lvm-localpv-controller
-  w8_pod local-path-storage local-path-provisioner
-  w8_pod cert-manager cert-manager
-  w8_pod argocd argocd-server 
-  w8_pod argocd argocd-repo-server
-  w8_pod ingress-nginx ingress-nginx-controller
+  ./w8s.sh
 
-  kubectl get po -A
+  echo 'sometimes github.com fails to resolve if these creates hit too quick'
+  echo 'still investigating as to what is causing it'
+  echo "run this script ($0) again after a slight rest if this fails"
+  sleep 5
+
   argocd app create -f kube-prometheus-stack/argocd.yaml --name example-prometheus-stack --grpc-web
   argocd app create -f openldap/argocd.yaml --name example-openldap --grpc-web
   argocd app create -f nc/argocd.yaml --name examplenc --grpc-web
