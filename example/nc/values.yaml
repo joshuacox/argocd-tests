@@ -215,9 +215,11 @@ nextcloud:
       $CONFIG = array (
         'trusted_proxies' =>
         array(
-        0 => 'nextcloud.example.com',
-        1 => '10.0.0.0/8',
+        0 => '127.0.0.1',
+        1 => '192.168.0.1/16',
+        2 => '10.0.0.0/8',
         ),
+        'forwarded_for_headers' => array('HTTP_X_FORWARDED_FOR'),
       );
 
     domains.config.php: |-

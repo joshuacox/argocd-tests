@@ -30,8 +30,18 @@ main () {
   kubectl get pod -A
   kubectl get ingress -A
   w8_ingress argocd argocd-server-ingress 
-
-  argocd admin initial-password -n argocd
+  sleep 2
+  set -e
+  countzero=0
+  result=1
+  while [[ ! $result -eq 0 ]]; do
+    argocd admin initial-password -n argocd
+    result=$?
+    if [[ $countzero -gt 9 ]]; then
+      break
+    fi
+  done
+  set +e
   PASSWORD_ARGO=$(argocd admin initial-password -n argocd|head -n 1)
   argocd login argocd.example.com \
     --password ${PASSWORD_ARGO} \
