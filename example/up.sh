@@ -6,8 +6,9 @@ main () {
   #set -eux
   set -eu
   kind create cluster --config=kind-config.yaml
-  kubectl apply -f https://kind.sigs.k8s.io/examples/ingress/deploy-ingress-nginx.yaml
+  #kubectl apply -f https://kind.sigs.k8s.io/examples/ingress/deploy-ingress-nginx.yaml
   cd $this_cwd
+  ./nginx.sh
   cd ../
   ./addCharts.sh
   ./openebs.sh
