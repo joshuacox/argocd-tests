@@ -21,7 +21,7 @@ commonLabels: {}
 
 controller:
   name: controller
-  enableAnnotationValidations: true
+  enableAnnotationValidations: false
   image:
     ## Keep false as default for now!
     chroot: false
@@ -107,7 +107,7 @@ controller:
   ## Disabled by default
   hostPort:
     # -- Enable 'hostPort' or not
-    enabled: false
+    enabled: true
     ports:
       # -- 'hostPort' http port
       http: 80

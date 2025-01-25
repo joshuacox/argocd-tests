@@ -16,6 +16,7 @@ main () {
   done
   PASSWORD_ARGO=$(argocd admin initial-password -n argocd|head -n 1)
 
+  set -x
   argocd login argocd.example.com \
     --password ${PASSWORD_ARGO} \
     --username admin \
