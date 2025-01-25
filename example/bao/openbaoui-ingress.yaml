@@ -10,8 +10,8 @@ metadata:
     #cert-manager.io/cluster-issuer: letsencrypt-production
     #spec.ingressClassName: traefik
   labels:
-    app.kubernetes.io/instance: openbaoui
-  name: openbao
+    app.kubernetes.io/instance: openbao-ui
+  name: openbao-ui
   namespace: example
 spec:
   ingressClassName: nginx
