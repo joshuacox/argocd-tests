@@ -262,6 +262,8 @@ nextcloud:
       <?php
       $CONFIG = array (
         'overwriteprotocol' => 'https'
+        'maintenance_window_start' => 1,
+        'overwrite.cli.url' => 'https://nextcloud.example.com/',
       );
   # For example, to enable image and text file previews:
   # previews.config.php: |-
